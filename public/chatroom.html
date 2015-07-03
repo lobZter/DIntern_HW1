@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+			$(function(){
+				$('#btn_send').click(function(){
+					var para = document.createElement("p");
+					var node = document.createTextNode($('#tv_input').val());
+					para.appendChild(node);
+					
+					var element = document.getElementById("area_chat");
+					element.appendChild(para);
+				});
+			});
+    </script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<h1>Chat Room</h1>
+			
+			<div id="area_chat" class="well" style="height:300px">
+				
+			</div>
+			
+			<textarea id="tv_input" class="form-control" rows="3"></textarea>
+			<input type="button" value="send" id="btn_send" class="btn btn-primary" />
+		</div>		
+	</body>
+</html>
