@@ -1,17 +1,34 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<style>
+			#messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+		</style>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script>
+    <script src="/socket.io/socket.io.js"></script>
+		<script>
+			var socket = io();
+		</script>
+		<script>
 			$(function(){
-				$('#btn_send').click(function(){
-					var para = document.createElement("p");
-					var node = document.createTextNode($('#tv_input').val());
-					para.appendChild(node);
+				$('#btn_send').click(function() {
+					$.post("send_msg",
+					{
+						msg: $('#tv_input').val(),
+					},
+					function(data, status){
+						console.log("Data: " + data + "\nStatus: " + status);
+					});
 					
-					var element = document.getElementById("area_chat");
-					element.appendChild(para);
+					socket.emit('chat message', $('#tv_input').val());
+					$('#tv_input').val('');
+				});
+				
+				socket.on('chat message', function(msg){
+					$('#messages').append($('<li>').text(msg));
 				});
 			});
     </script>
@@ -21,11 +38,11 @@
 			<h1>Chat Room</h1>
 			
 			<div id="area_chat" class="well" style="height:300px">
-				
+				<ul id="messages"></ul>
 			</div>
-			
-			<textarea id="tv_input" class="form-control" rows="3"></textarea>
-			<input type="button" value="send" id="btn_send" class="btn btn-primary" />
+			<th><input type="text" id="tv_input" class="form-control">
+			<th><button id="btn_send" class="btn btn-primary">send</button>
+
 		</div>		
 	</body>
 </html>
