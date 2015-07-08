@@ -3,6 +3,7 @@
 npm install socket.io
 npm install express
 npm install body-parser
+npm install mongoose
 
 
 /* for debug */ 

@@ -1,13 +1,19 @@
 <html>
 	<head>
-    <script src="js/jquery-2.1.4.min.js"></script>
-    
+		<script src="js/jquery-2.1.4.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			$(function(){
+				$("#submit").click(function(){
+					window.location.href="/chatroom.html?username="+$("#username").val();
+				});
+			});
+		</script>
+
 	</head>
 	<body>
 		<h1>Hello World</h1>
-		<a href="chatroom.html">click me</a>
-		<!--
-		<button type="button" id="btn_click">click me</button>
-		-->
+		<input type="text" id="username" placeholder="Type your name" autocomplete="off" />
+		<button id="submit">Send</button>
 	</body>
 </html>
