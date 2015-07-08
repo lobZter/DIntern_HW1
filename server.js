@@ -15,7 +15,6 @@ app.post("/send_msg", function(req, res) {
 	res.sendStatus(200);
 });
 
-// mongodb
 mongoose.connect('mongodb://localhost/DIntern_HW1');
 
 var db = mongoose.connection;
@@ -25,41 +24,41 @@ db.once('open', function callback () {
 });
 
 var mySchema = new mongoose.Schema({
-	name: String,
-	msg: String
+	username: String,
+	message: String
 });
 var myModel = db.model('msgLog', mySchema);	
 
 
 io.on('connection', function(socket) {
 	
-	socket.on('add user', function (username) {
+	socket.on('add user', function(username) {
 		console.log(username + " connected");
 		socket.username = username;
-		
-		var msgLog = new myModel(data);
-		msgLog.find(query,function(error,output) {
-			console.log(output);
+	
+		myModel.find({}, function(err, data) {
+			if(!err) { 
+				//console.log(data.username);
+				socket.emit('history log', data);
+			}
 		});
-		
-		//socket.emit('history log', );
 	});
 	
 	socket.on('new message', function(msg){
 		console.log(socket.username + ': ' + msg);
 		var data = {
-			//username: socket.username,
-			username: "lobZter",
+			username: socket.username,
 			message: msg
 		};
-		var msgLog = new myModel(data);
-		msgLog.save(function saveChat(error, savedChatModel) {
-			if (error) {
+		var msgLog = new myModel({
+			username: socket.username,
+			message: msg
+		});
+		msgLog.save(function(error) {
+			if (error) 
 				console.log("Error, ChatModel not saved");
-			}
-			else {
+			else 
 				console.log("Success: ChatModel saved");
-			}
 		});
 		io.emit('new message', {
 			username: socket.username,
@@ -72,6 +71,6 @@ io.on('connection', function(socket) {
 	});
 });
 
-http.listen(55559, function() {
-  console.log('listening on *:55559');
+http.listen(8080, function() {
+  console.log('listening on :8080');
 });

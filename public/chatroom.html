@@ -19,9 +19,8 @@
 				for (var i = 0; i < sURLVariables.length; i++) 
 				{
 					var sParameterName = sURLVariables[i].split('=');
-					if (sParameterName[0] == sParam) 
-					{
-            return sParameterName[1];
+					if (sParameterName[0] == sParam) {
+						return sParameterName[1];
 					}
 				}
 			}
@@ -32,8 +31,15 @@
 					
 					$('#tv_input').val('');
 				});
+
+				socket.on('history log', function(data) {
+					for(var index in data) {
+						console.log(data[index].username);
+						$('#messages').append($('<li>').text(data[index].username+": "+data[index].message));
+					}
+				});
 				
-				socket.on('connect',function() {
+				socket.on('connect', function() {
 					socket.emit('add user', getUrlParameter('username'));
 				});
 
