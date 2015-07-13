@@ -1,11 +1,18 @@
+<!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<script src="js/jquery-2.1.4.min.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
 			$(function(){
-				$("#submit").click(function(){
+				$('#submit').click(function(){
 					window.location.href="/chatroom.html?username="+$("#username").val();
+				});
+				$('#username').keyup(function(event){
+					if(event.which == 13){
+						$('#submit').click();
+					}
 				});
 			});
 		</script>

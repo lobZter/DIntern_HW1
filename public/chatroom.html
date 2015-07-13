@@ -1,64 +1,26 @@
 <html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-		<style>
-			#messages { list-style-type: none; margin: 0; padding: 0; }
-			#messages li { padding: 5px 10px; }
-			#messages li:nth-child(odd) { background: #eee; }
-		</style>
-    <script src="js/jquery-2.1.4.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-
-		<script>
-			var socket = io(); 
-			
-			function getUrlParameter(sParam) {
-				var sPageURL = window.location.search.substring(1);
-				var sURLVariables = sPageURL.split('&');
-				for (var i = 0; i < sURLVariables.length; i++) 
-				{
-					var sParameterName = sURLVariables[i].split('=');
-					if (sParameterName[0] == sParam) {
-						return sParameterName[1];
-					}
-				}
-			}
-	
-			$(function(){
-				$('#btn_send').click(function() {
-					socket.emit('new message', $('#tv_input').val());
-					
-					$('#tv_input').val('');
-				});
-
-				socket.on('history log', function(data) {
-					for(var index in data) {
-						console.log(data[index].username);
-						$('#messages').append($('<li>').text(data[index].username+": "+data[index].message));
-					}
-				});
-				
-				socket.on('connect', function() {
-					socket.emit('add user', getUrlParameter('username'));
-				});
-
-				socket.on('new message', function(data){
-					$('#messages').append($('<li>').text(data.username+": "+data.message));
-				});
-			});
-    </script>
-	</head>
-	<body>
-		<div class="container-fluid">
-			<h1>Chat Room</h1>
-			
-			<div id="area_chat" class="well" style="height:300px">
-				<ul id="messages"></ul>
-			</div>
-			<th><input type="text" id="tv_input" class="form-control">
-			<th><button id="btn_send" class="btn btn-primary">send</button>
-
-		</div>		
-	</body>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css"/>
+  <script src="js/jquery-2.1.4.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/main.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+	<div ng-app="myApp" ng-controller="myCtrl" class="container-fluid">
+		<h1>Chat</h1>
+		<div id="chatWrap" class="well" style="height:300px;overflow:auto;">
+			<ul id="msgList">
+				<li ng-repeat="msg in msgs track by $index">
+					{{msg.username}}:{{msg.message}}
+				</li>
+			</ul>
+		</div>
+		<form ng-submit="sendMsg()">
+				<input type="text" ng-model="chat.msg" class="form-control"/>
+		</form>
+	</div>
+</body>
 </html>
