@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-		<script src="js/jquery-2.1.4.min.js"></script>
-		<script src="/socket.io/socket.io.js"></script>
-		<script>
-			$(function(){
-				$('#submit').click(function(){
-					window.location.href="/chatroom.html?username="+$("#username").val();
-				});
-				$('#username').keyup(function(event){
-					if(event.which == 13){
-						$('#submit').click();
-					}
-				});
-			});
-		</script>
-
-	</head>
-	<body>
-		<h1>Hello World</h1>
-		<input type="text" id="username" placeholder="Type your name" autocomplete="off" />
-		<button id="submit">Send</button>
-	</body>
+<head>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <script src="js/jquery-2.1.4.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+      $(function(){
+          $('#submit').click(function(){
+              window.location.href="/chatroom.html?username="+$("#username").val();
+          });
+          $('#username').keyup(function(event){
+              if(event.which == 13){
+                  $('#submit').click();
+              }
+          });
+      });
+  </script>
+</head>
+<body>
+  <div class="container-fluid">
+    <h1>Hello World</h1>
+    <div class="row">
+      <div class="col-md-3" style="padding-right:0px">
+        <input type="text" id="username" placeholder="Type your name" autocomplete="off" class="form-control"/>
+      </div>
+      <div class="col-md-1" style="padding-right:0px">
+        <button id="submit" class="btn btn-default">Send</button>
+      </div>
+    </div>
+  </div>
+</body>
 </html>

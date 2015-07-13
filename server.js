@@ -2,22 +2,11 @@ var express = require('express'),
     app = express(),
     http = require('http').Server(app),
     io = require('socket.io')(http),
-    bodyParser = require('body-parser'),
     mongoose = require('mongoose');
 
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json());						// parse application/json
-app.use(bodyParser.urlencoded({ extended: true }));	// parse application/x-www-form-urlencoded
-
-
-app.post("/send_msg", function(req, res) {
-    console.log(req.body.msg);
-    res.sendStatus(200);
-});
-
 
 mongoose.connect('mongodb://localhost/DIntern_HW1');
-
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {

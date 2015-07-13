@@ -1,26 +1,26 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css"/>
   <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-	<script src="js/angular.min.js"></script>
-	<script src="js/main.js"></script>
+  <script src="js/angular.min.js"></script>
+  <script src="js/main.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 </head>
-<body>
-	<div ng-app="myApp" ng-controller="myCtrl" class="container-fluid">
-		<h1>Chat</h1>
-		<div id="chatWrap" class="well" style="height:300px;overflow:auto;">
-			<ul id="msgList">
-				<li ng-repeat="msg in msgs track by $index">
-					{{msg.username}}:{{msg.message}}
-				</li>
-			</ul>
-		</div>
-		<form ng-submit="sendMsg()">
-				<input type="text" ng-model="chat.msg" class="form-control"/>
-		</form>
-	</div>
+<body ng-app="myApp">
+  <div ng-controller="myCtrl" class="container-fluid">
+    <h1>Chat</h1>
+    <div id="chatWrap" class="well" style="height:300px;overflow:auto;">
+      <ul id="msgList">
+        <li ng-repeat="msg in msgs track by $index">
+          {{msg.username}}: {{msg.message}}
+        </li>
+      </ul>
+    </div>
+    <form ng-submit="sendMsg()">
+      <input type="text" ng-model="chat.msg" class="form-control"/>
+    </form>
+  </div>
 </body>
 </html>
